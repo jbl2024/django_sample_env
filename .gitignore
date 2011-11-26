@@ -1,0 +1,8 @@
+*.pyc
+*.pyo
+*~
+db.dat
+*.swp
+pip-*.gz
+vtenv
+eggs
