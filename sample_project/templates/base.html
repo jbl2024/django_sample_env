@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="fr-FR">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="follow, all" />
+    <meta name="description" content="Sample project" />
+    <meta name="keywords" content="Sample" />
+    <meta name="author" content="username" />
+    {% block meta %}{% endblock %}
+<!-- endmeta -->
+
+    <link rel="shortcut icon" type="image/png" href="/media/img/favicon.png" />
+    <link rel='index' title='Homepage' href='http://example.com/' />
+    {# <link rel="stylesheet" type="text/css" media="all" href="/media/css/style.css" /> #}
+    <link rel="stylesheet" href="/media/css/bootstrap/bootstrap.min.css">
+    {% block link %}{% endblock %}
+<!-- endlink -->
+
+    <title>Example.com - {% block title %}{% endblock %}</title>
+<!-- endtitle -->
+
+    {# <script type='text/javascript' src='/media/js/lib/jquery-1.6.1.min.js'></script> #}
+    {% block script %}{% endblock %}
+<!-- endscript -->
+
+</head>
+
+
+<body class="{% block classbody %}{% endblock classbody %}">
+{% block body %}
+
+    {% block topbar %}
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">Sample Project</a>
+
+          <ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    {% endblock topbar %}<!-- endtopbar -->
+
+    </div>
+    {% block content %}
+    {% endblock content %}<!-- endcontent -->
+
+{% endblock body %}<!-- endbody -->
+</body>
+</html>

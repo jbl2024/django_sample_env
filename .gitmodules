@@ -1,0 +1,3 @@
+[submodule "sample_project/media/css/bootstrap"]
+	path = sample_project/media/css/bootstrap
+	url = git://github.com/twitter/bootstrap.git
