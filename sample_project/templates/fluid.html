@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% comment %}
+--------------------------------------------------
+Template for single column with twitter bootstrap.
+
+Fluid design
+--------------------------------------------------
+{% endcomment %}
+
+
+{% block title %}{{ pagetitle }}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>{% block pagetitle %}{% endblock pagetitle %}</h1>
+        {% block page %}
+        {% endblock page %}<!-- endpage -->
+
+      </div>
+
+      <footer>
+        <p>&copy; Company 2011</p>
+
+      </footer>
+
+    </div> <!-- /container -->
+
+{% endblock content %}
+

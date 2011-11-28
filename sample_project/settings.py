@@ -1,5 +1,6 @@
-# Django settings Bearstech flavored
+# Django settings
 import os, sys
+import os.path
 #gettext = lambda s: s
 
 # Write here the project name
@@ -26,7 +27,7 @@ SYSPATH = sys.path
 #################################
 
 ADMINS = (
-     ('Jerome "jbl2024" Blondon', 'jerome@blondon.fr'),
+     #('Jerome "jbl2024" Blondon', 'jerome@blondon.fr'),
 )
 
 SERVER_EMAIL = "%s@localhost" % PROJECT_NAME
@@ -73,7 +74,10 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/admin/'
+ADMIN_MEDIA_PREFIX = '/media/statics/admin/'
+
+STATIC_URL = '/media/statics/'
+STATIC_ROOT = os.path.join(MEDIA_ROOT, 'statics')
 
 ###############################################################################
 # Dev section
@@ -94,7 +98,7 @@ TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'en'
 if PRODUCTION_MODE :
     LANGUAGE_CODE = 'fr'
-    
+
 TEST_LANGUAGE_CODE = 'en'
 
 SITE_ID = 1
@@ -105,7 +109,7 @@ USE_I18N = True
 USE_L10N = True
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 's3#skd8u60n4^5q0!(c&r96cnlco@3-h_66k021q&87^$fsv@)'
+SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -115,9 +119,17 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    #'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.doc.XViewMiddleware',
+    #'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -134,21 +146,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+    "django.core.context_processors.static",
     "django.core.context_processors.request",
     #"messages.context_processors.inbox",
 )
-
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
-    'django.contrib.markup',
-    #'django.contrib.sitemaps',
-    'sample',
-)
-
 
 INTERNAL_IPS = (
     "127.0.0.1",
@@ -163,3 +164,86 @@ LANGUAGES = (
     ('fr', 'French'),
     ('en', 'English'),
 )
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.comments',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.admin',
+    'django.contrib.markup',
+    'django.contrib.staticfiles',
+
+    # Contrib
+    #'south',
+
+    # Local
+    'dummy',
+)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(name)s:%(lineno)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'null': {
+            'level':'DEBUG',
+            'class':'django.utils.log.NullHandler',
+        },
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'debugfile':{
+            'level':'DEBUG',
+            'class':'logging.FileHandler',
+            'filename': os.path.join(PROJECT_PATH, 'log/debug.log'),
+            'formatter': 'verbose'
+        },
+        'file':{
+            'level':'ERROR',
+            'class':'logging.FileHandler',
+            'filename': os.path.join(PROJECT_PATH, 'log/error.log'),
+            'formatter': 'verbose'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers':['null'],
+            'propagate': True,
+            'level':'INFO',
+        },
+        'django.request': {
+            'handlers': ['mail_admins', 'file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'sample_project': {
+            'handlers': ['console', 'file'],
+            'level': 'ERROR',
+        },
+        'sample_project.dummy': {
+            'handlers': ['console', 'file', 'debugfile'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
+}
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

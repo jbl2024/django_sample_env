@@ -8,8 +8,8 @@ PROJECT_ROOT = abspath(dirname(__file__))
 
 # Uncomment this if you use Virtualenv
 #
-activate_this = PROJECT_ROOT + "/../vtenv/bin/activate_this.py"
-execfile(activate_this, dict(__file__=activate_this))
+# activate_this = PROJECT_ROOT + "/../vtenv/bin/activate_this.py"
+# execfile(activate_this, dict(__file__=activate_this))
 
 sys.path.insert(0, join(PROJECT_ROOT, "apps"))
 
