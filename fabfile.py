@@ -5,7 +5,7 @@ env.hosts = ['server.example.com',]
 env.user = "sample_project"
 
 WEBSITE_PATH = "sample_project"
-GIT_PATH = "forge@git.example.com:sample_project.git")
+GIT_PATH = "forge@git.example.com:sample_project.git"
 BRANCH = "master"
 
 def syncdb():

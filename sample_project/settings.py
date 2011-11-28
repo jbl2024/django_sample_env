@@ -176,10 +176,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # Contrib
-    #'south',
+    'south',
 
     # Local
-    'dummy',
+    'sample',
 )
 
 LOGGING = {
