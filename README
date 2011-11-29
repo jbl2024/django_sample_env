@@ -21,10 +21,11 @@ After cloning, the easy way to use this template with virtual_env::
     ./vtenv.sh
     ./fab prepare
 
-You can access to a dummy view built with bootstrap at http://localhost:8000/sample/dummy with theses two additional commands::
+You can access to a dummy view built with bootstrap at http://localhost:8000/sample/dummy
 
-    git submodule init
-    git submodule update
+To see all fabfile commands do::
+
+    ./fab -l
 
 TODO
 ----

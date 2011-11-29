@@ -50,6 +50,13 @@ def collectstatic():
     with lcd("%s" % WEBSITE_PATH):
         local('./manage.py collectstatic --noinput')
 
+def gitsubmodules():
+    """Build submodules
+    """
+    if not os.path.exists("%s/media/css/bootstrap/bootstrap.css" % WEBSITE_PATH):
+        local("git submodule init")
+    local("git submodule update")
+
 def update():
     """Update env : syncdb, migrate, collectstatic, test
     """
@@ -63,10 +70,11 @@ def prepare():
     """
     local_settings()
     vtenv_helpers()
+    gitsubmodules()
     update()
 
 def install():
-    """Remote install
+    """[DISTANT] Remote install
     """
     with cd("root"):
         run("git clone %s ." % GIT_PATH)
@@ -77,7 +85,7 @@ def install():
         run("./fab prepare")
 
 def deploy():
-    """Update distant django env
+    """[DISTANT] Update distant django env
     """
     with settings(warn_only=True):
         if run("test -d root/%s" % WEBSITE_PATH).failed:
