@@ -1,3 +1,4 @@
+import os.path
 from fabric.api import *
 from fabric.utils import puts
 from fabric.contrib.files import sed, uncomment, append
@@ -30,7 +31,6 @@ def vtenv_helpers():
 def local_settings():
     """Add local_settings.py
     """
-    import os.path
     if not os.path.exists("%s/local_settings.py" % WEBSITE_PATH):
         puts("File local_settings.py not found : I create it")
         with lcd("%s" % WEBSITE_PATH):
