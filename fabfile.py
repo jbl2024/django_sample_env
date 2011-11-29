@@ -1,3 +1,4 @@
+import os.path
 from fabric.api import *
 from fabric.utils import puts
 from fabric.contrib.files import sed, uncomment, append
@@ -30,7 +31,6 @@ def vtenv_helpers():
 def local_settings():
     """Add local_settings.py
     """
-    import os.path
     if not os.path.exists("%s/local_settings.py" % WEBSITE_PATH):
         puts("File local_settings.py not found : I create it")
         with lcd("%s" % WEBSITE_PATH):
@@ -50,6 +50,13 @@ def collectstatic():
     with lcd("%s" % WEBSITE_PATH):
         local('./manage.py collectstatic --noinput')
 
+def gitsubmodules():
+    """Build submodules
+    """
+    if not os.path.exists("%s/media/css/bootstrap/bootstrap.css" % WEBSITE_PATH):
+        local("git submodule init")
+    local("git submodule update")
+
 def update():
     """Update env : syncdb, migrate, collectstatic, test
     """
@@ -63,10 +70,11 @@ def prepare():
     """
     local_settings()
     vtenv_helpers()
+    gitsubmodules()
     update()
 
 def install():
-    """Remote install
+    """[DISTANT] Remote install
     """
     with cd("root"):
         run("git clone %s ." % GIT_PATH)
@@ -77,7 +85,7 @@ def install():
         run("./fab prepare")
 
 def deploy():
-    """Update distant django env
+    """[DISTANT] Update distant django env
     """
     with settings(warn_only=True):
         if run("test -d root/%s" % WEBSITE_PATH).failed:
